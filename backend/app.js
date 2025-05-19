@@ -38,7 +38,6 @@ app.post("/api/contact/addcontact", (req, res, next) => {
         email: req.body.email,
         phoneNumber: req.body.phoneNumber
     })
-
     contact.save().then(()=>{
         res.status(201).json({
             message: "Contact add Successfully"
@@ -58,6 +57,24 @@ app.get("/api/contact/getContact", (req, res, next) => {
     }).catch((error) => {
         res.status(500).json({
             message: "Fetching contact failed!"
+        })
+    })
+})
+
+app.delete("/api/contact/deleteContact/:id", (req, res, next) => {
+    Contact.deleteOne({_id: req.params.id}).then((result)=>{
+        if(result.deletedCount > 0) {
+            res.status(200).json({
+                message: "Delete contact successfully"
+            })
+        } else {
+            res.status(400).json({
+                message: "Not authorized"
+            })
+        }
+    }).catch(error => {
+        res.status(500).json({
+            message: "contact delete failed"
         })
     })
 })
