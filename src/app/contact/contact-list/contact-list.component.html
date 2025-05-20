@@ -1,20 +1,20 @@
 <mat-list>
-    @for (contact of contactResource.value(); track contact._id) {
-    <mat-list-item>
-        <h3 matListItemTitle>{{contact.name}}</h3>
-        <p matListItemLine>{{contact.email}}</p>
-        <div matListItemMeta>
-            <button mat-icon-button (click)="deleteContact(contact._id)">
-                <mat-icon>delete</mat-icon>
-            </button>
+  @for (contact of contactResource.value(); track contact._id) {
+  <mat-list-item>
+    <h3 matListItemTitle>{{ contact.name }}</h3>
+    <p matListItemLine>{{ contact.email }}</p>
+    <div matListItemMeta>
+      <button mat-icon-button (click)="deleteContact(contact._id)">
+        <mat-icon>delete</mat-icon>
+      </button>
 
-            <button mat-icon-button>
-                <!-- <mat-icon routerLink=`/edit/4/${contact._id}`>edit</mat-icon> -->
-            </button>
-        </div>
-    </mat-list-item>
-    }
+      <button mat-icon-button>
+        <mat-icon routerLink="/edit/{{ contact._id }}">edit</mat-icon>
+      </button>
+    </div>
+  </mat-list-item>
+  }
 </mat-list>
 @if (loading()) {
-    <mat-spinner mode="indeterminate"></mat-spinner>
+<mat-spinner mode="indeterminate"></mat-spinner>
 }

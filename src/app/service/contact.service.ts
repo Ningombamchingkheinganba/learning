@@ -17,6 +17,7 @@ export class ContactService {
 
   async getContactList(): Promise<Contact[]> {
     await this.simulateDelay();
+    //throw new Error("Can't able to load the contacts!"); // error thokhnbani
     return await firstValueFrom(this.http.get<Contact[]>('http://localhost:3000/api/contact/getContact'));
   }
 
@@ -28,4 +29,26 @@ export class ContactService {
     const data = {name,email,phoneNumber}
     return await firstValueFrom(this.http.post<{message: string}>(`http://localhost:3000/api/contact/addcontact`, data));
   }
+
+  async getContactById(id:string): Promise<Contact> {
+    return await firstValueFrom(this.http.get<Contact>(`http://localhost:3000/api/contact/getContact/${id}`,));
+  }
+
+  async editContact({
+    id,
+    email,
+    name,
+    phoneNumber
+  }: {
+    id: string;
+    email: string;
+    name: string;
+    phoneNumber: string;
+  }): Promise<{ message: string }> {
+    const data = { name, email, phoneNumber };
+    return await firstValueFrom(
+      this.http.put<{ message: string }>(`http://localhost:3000/api/contact/editContact/${id}`, data)
+    );
+  }
+  
 }

@@ -1,11 +1,12 @@
-import { Component, computed, inject, resource, signal } from '@angular/core';
+import { Component, computed, effect, inject, resource, signal } from '@angular/core';
 import { ContactService } from '../../service/contact.service';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from "@angular/material/list";
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-contact-list',
@@ -30,4 +31,15 @@ export class ContactListComponent {
     this.deleting.set(false);
     this.contactResource.reload();
   }
+
+  snackBar = inject(MatSnackBar);
+
+  showError = effect(() => {
+    const error = this.contactResource.error() as Error;
+    if (error) {
+      this.snackBar.open(error.message, "Close", {
+        duration: 3000,
+      })
+    }
+  })
 }

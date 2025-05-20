@@ -79,4 +79,45 @@ app.delete("/api/contact/deleteContact/:id", (req, res, next) => {
     })
 })
 
+app.get("/api/contact/getContact/:id", (req,res,next)=> {
+    Contact.findById(req.params.id).then((result) => {
+        if(result) {
+            res.status(200).json(result)
+        } else {
+            res.status(404).json({
+                message: "Contact not found!"
+            })
+        }
+    }).catch(error => {
+        res.status(500).json({
+            message: "Fetching post failed!"
+        })
+    })
+})
+
+app.put("/api/contact/editContact/:id", (req, res, next) => {
+    const contact = new Contact({
+        _id:req.params.id,
+        name: req.body.name,
+        email: req.body.email,
+        phoneNumber: req.body.phoneNumber
+    })
+
+    Contact.updateOne({_id: req.params.id},contact).then((result) => {
+        if (result.modifiedCount > 0) {
+            res.status(200).json({
+                message: "Contact updateSuccessfully"
+            })
+        } else {
+            res.status(400).json({
+                message: "Not authorized!",
+            })
+        }
+    }).catch(error => {
+        res.status(500).json({
+            message: "Couldn't update contact"
+        })
+    })
+})
+
 module.exports = app;
