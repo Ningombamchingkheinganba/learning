@@ -9,12 +9,12 @@
             </button>
 
             <button mat-icon-button>
-                <mat-icon>edit</mat-icon>
+                <!-- <mat-icon routerLink=`/edit/4/${contact._id}`>edit</mat-icon> -->
             </button>
         </div>
     </mat-list-item>
     }
 </mat-list>
-@if (contactResource.isLoading()) {
+@if (loading()) {
     <mat-spinner mode="indeterminate"></mat-spinner>
 }

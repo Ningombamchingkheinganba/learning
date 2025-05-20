@@ -23,4 +23,9 @@ export class ContactService {
   async deleteContact(id: string): Promise<{message:string}> {
     return await firstValueFrom(this.http.delete<{message:string}>(`http://localhost:3000/api/contact/deleteContact/${id}`));
   }
+
+  async addContact(name: string, email: string, phoneNumber: string): Promise<{message:string}> {
+    const data = {name,email,phoneNumber}
+    return await firstValueFrom(this.http.post<{message: string}>(`http://localhost:3000/api/contact/addcontact`, data));
+  }
 }
